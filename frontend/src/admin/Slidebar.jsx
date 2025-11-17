@@ -17,7 +17,7 @@ const Slidebar = () => {
       >
         <Link to={"/admin/dashboard"} className="block hover:text-blue-600">Dashboard <MdDashboard className="inline"/> </Link>
         <Link to={"/admin/adminproducts"} className="block hover:text-blue-600">Manage Products <MdOutlineProductionQuantityLimits className="inline" /></Link>
-        <Link className="block hover:text-blue-600">Manage Quires < MdOutlineQueryStats className="inline"/> </Link>
+        <Link to={"/admin/adminquery"} className="block hover:text-blue-600">Manage Quires < MdOutlineQueryStats className="inline"/> </Link>
         <Link className="block hover:text-red-400">Exit the store <IoMdExit className="inline" />
  </Link>
       </nav>

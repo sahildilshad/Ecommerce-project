@@ -10,6 +10,8 @@ import Query from './components/Query'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminProducts from './admin/AdminProducts'
 import AddProducts from './admin/AddProducts'
+import EditProducts from './admin/EditProducts'
+import AdminQuery from './admin/AdminQuery'
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/adminproducts" element={<AdminProducts />} />
       <Route path="/admin/add-products" element={<AddProducts />} />
+      <Route path="/admin/edit-products" element={<EditProducts />} />
+      <Route path="/admin/adminquery" element={<AdminQuery />} />
      </Routes>
      <Footer />
      </BrowserRouter>
