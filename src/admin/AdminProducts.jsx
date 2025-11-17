@@ -1,0 +1,52 @@
+import React from "react";
+import Slidebar from "./Slidebar";
+import { Link } from "react-router";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+
+const AdminProducts = () => {
+  return (
+    <div className="flex mt-16">
+      <Slidebar />
+      <div className="flex-1 p-10 bg-gray-50 min-h-screen">
+        <h1 className="text-3xl font-bold mb-6 text-gray-700">
+          Manage Products
+        </h1>
+        <Link to={"/admin/add-products"}>
+          <button className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Add products
+          </button>
+        </Link>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-5  ">
+          {
+            [1,2,3,4,5].map(()=>(
+               <div className="bg-gray-100 rounded-xl shadow-md p-4 hover:shadow-xl">
+            <img
+              src="https://tse3.mm.bing.net/th/id/OIP.kori7Y8NQzmHi4RLlD-T9AHaE5?pid=Api&P=0&h=180"
+              className="w-full h-40 mb-4  border object-contain rounded-md "
+              alt=""
+            />
+            <h3 className="text-xl font-semibold text-gray-700">Apple</h3>
+            <p className="text-sm text-gray-600"> Category :- Fresh</p>
+            <p className="text-sm text-green-600 font-bold mt-1">$55</p>
+            <p className="text-blue-600 mt-1 font-bold">In-Stock</p>
+            <div className="flex flex-col sm:flex-row text-xl justify-between mt-4">
+              <Link to={"/admin/edit-products"} className="flex items-center gap-3 text-blue-600 hover:text-blue-700 font-bold">
+                <FaEdit />
+              </Link>
+              <Link  className="flex items-center gap-3 text-red-500 hover:text-red-600 font-bold">
+                <MdDelete />
+              </Link>
+            </div>
+          </div>
+
+            ))
+          }
+         
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminProducts;
