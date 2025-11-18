@@ -12,6 +12,7 @@ import AdminProducts from './admin/AdminProducts'
 import AddProducts from './admin/AddProducts'
 import EditProducts from './admin/EditProducts'
 import AdminQuery from './admin/AdminQuery'
+import QueryRiply from './admin/QueryRiply'
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
       <Route path="/admin/add-products" element={<AddProducts />} />
       <Route path="/admin/edit-products" element={<EditProducts />} />
       <Route path="/admin/adminquery" element={<AdminQuery />} />
+      <Route path="/admin/queryriply" element={<QueryRiply/>} />
      </Routes>
      <Footer />
      </BrowserRouter>

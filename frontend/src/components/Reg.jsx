@@ -6,8 +6,22 @@ import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 const Reg = () => {
      const navigate = useNavigate();
   const [showpassword, setShowPassword] = useState(true);
-  function handleform(e) {
+  const [form,setForm] =  useState({fullname:"",email:"",pass:""})
+
+ async function handleform(e) {
     e.preventDefault();
+    try {
+    const response =  await fetch('/api/regdata',{
+        method:"POST",
+        headers:{"content-Type":"application/json"},
+        body:JSON.stringify(form)
+      })
+    } catch (error) {
+      
+    }
+  }
+  function handleChange(e){
+    setForm({...form,[e.target.name]:e.target.value})
   }
   return (
     <div className='fixed inset-0 flex justify-center items-center backdrop-blur-sm bg-black bg-opacity-45'>
@@ -31,6 +45,9 @@ const Reg = () => {
             type="text"
             className="w-full border border-blue-500 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
             placeholder="Enter full name"
+            name="fullname"
+            value={form.fullname}
+            onChange={handleChange}
           />
           <label className="block  mb-2 text-sm font-semibold" htmlFor="">
             Email
@@ -39,6 +56,9 @@ const Reg = () => {
             type="text"
             className="w-full border border-blue-500 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
             placeholder="Enter email "
+            name="email"
+            value={form.email}
+            onChange={handleChange}
           />
           <label className="block  mb-2 text-sm font-semibold" htmlFor="">
             Password
@@ -48,6 +68,9 @@ const Reg = () => {
               className="w-full border border-blue-500 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
               placeholder="Enter password"
               type={showpassword ? "password" : "text"}
+              name="pass"
+              value={form.pass}
+              onChange={handleChange}
             />
             <button
               onClick={() => {

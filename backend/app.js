@@ -5,6 +5,8 @@ dotenv.config()
 
 const apiRoutes = require("./router/api")
 const {connectDB} =  require("./config/db")
+const cors  = require("cors")
+app.use(cors())
 connectDB()
 
 app.use(express.json())

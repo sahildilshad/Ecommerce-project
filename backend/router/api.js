@@ -1,6 +1,6 @@
 const apiRoutes =  require("express").Router()
 
-
+const userController =  require('../controller/user')
 
 
 apiRoutes.get("/",(req,res)=>{
@@ -11,4 +11,9 @@ apiRoutes.post("/data",(req,res)=>{
    console.log(req.body)
    res.send("data get..")
 })
+apiRoutes.post("/regdata",userController.regDataController)
+
+
+
+
 module.exports = apiRoutes
