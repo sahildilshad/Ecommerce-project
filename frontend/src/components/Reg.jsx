@@ -3,6 +3,7 @@ import { IoIosClose } from "react-icons/io";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
+import toast from "react-hot-toast";
 const Reg = () => {
      const navigate = useNavigate();
   const [showpassword, setShowPassword] = useState(true);
@@ -16,7 +17,15 @@ const Reg = () => {
         headers:{"content-Type":"application/json"},
         body:JSON.stringify(form)
       })
+     const result = await response.json()
+    if(response.ok){
+      toast.success(result.message)
+      navigate("/login")
+    }else{
+      toast.error(result.message)
+    }
     } catch (error) {
+      toast.error(error)
       
     }
   }
@@ -28,9 +37,7 @@ const Reg = () => {
       <div className='bg-white w-full max-w-md rounded py-6 px-4 relative'>
           <button
           className="absolute top-3 right-2 font-bold text-2xl text-blue-500 hover:text-blue-700"
-          onClick={() => {
-            navigate("/");
-          }}>
+         >
           <IoIosClose />
         </button>
         <h2 className="text-2xl font-bold mb-4 text-blue-500 text-center">

@@ -12,6 +12,7 @@ apiRoutes.post("/data",(req,res)=>{
    res.send("data get..")
 })
 apiRoutes.post("/regdata",userController.regDataController)
+apiRoutes.post("/loginuser",userController.loginDataController)
 
 
 
