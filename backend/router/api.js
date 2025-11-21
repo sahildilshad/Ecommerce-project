@@ -15,7 +15,8 @@ apiRoutes.post("/regdata",userController.regDataController)
 apiRoutes.post("/loginuser",userController.loginDataController)
 apiRoutes.post("/addadminproduct",adminController.addadminproductController)
 apiRoutes.get("/getproduct",adminController.getAllProductController)
-
-
+apiRoutes.delete("/productdelete/:abc",adminController.deleteProductController)
+apiRoutes.get("/editvaluedata/:abc",adminController.editvaluedataController)
+apiRoutes.post("/productupdate/:abc",adminController.productUpdateController)
 
 module.exports = apiRoutes

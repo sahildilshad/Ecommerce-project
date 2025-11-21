@@ -1,9 +1,66 @@
 import React from "react";
 import Slidebar from "./Slidebar";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 const EditProducts = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [edit, setEdit] = useState({});
+
+  async function editvalueData() {
+    try {
+      const response = await fetch(`/api/editvaluedata/${id}`);
+      const result = await response.json();
+
+      if (response.ok) {
+        setEdit(result.data);
+        console.log(result);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  }
+  useEffect(() => {
+    editvalueData();
+  }, []);
+
+  async function handleForm(e) {
+    e.preventDefault();
+    try {
+          const formData = {
+      Pname: edit.productName,
+      Pprice: edit.productPrice,
+      Cat: edit.productCategory,
+      Pstatus: edit.productStatus,
+    };
+    const response = await fetch(`/api/productupdate/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    const result = await response.json();
+  if(response.ok){
+    toast.success(result.message)
+    navigate("/admin/adminproduct")
+  }else{
+    toast.error(result.message)
+  }
+
+      
+    } catch (error) {
+      toast.error(error)
+      
+    }
+  }
+  function handleChange(e) {
+    setEdit({ ...edit, [e.target.name]: e.target.value });
+  }
   return (
     <div className="flex mt-16">
       <Slidebar />
@@ -20,6 +77,7 @@ const EditProducts = () => {
           Back
         </button>
         <form
+          onSubmit={handleForm}
           action=""
           className="bg-white shadow-md rounded-xl p-6 max-w-3xl mx-auto space-y-6 mt-4"
         >
@@ -30,6 +88,9 @@ const EditProducts = () => {
           <input
             className="w-full px-4 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2"
             type="text"
+            value={edit.productName || ""}
+            name="productName"
+            onChange={handleChange}
           />
           <label className="block text-gray-700 font-medium mb-1" htmlFor="">
             Price{" "}
@@ -37,32 +98,42 @@ const EditProducts = () => {
           <input
             className="w-full px-4 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2"
             type="number"
-            name=""
+            name="productPrice"
             id=""
+            value={edit.productPrice}
+            onChange={handleChange}
           />
           <label className="block text-gray-700 font-medium mb-1" htmlFor="">
             Category
           </label>
           <select
-            name=""
+            value={edit.productCategory}
+            name="productCategory"
+            onChange={handleChange}
             id=""
             className="w-full px-4 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2"
           >
-            <option value="">Cafe</option>
-            <option value="">Home</option>
-            <option value="">Toys</option>
-            <option value="">Fresh</option>
-            <option value="">Electronis</option>
-            <option value="">Beauty</option>
+            <option value="cafe">Cafe</option>
+            <option value="home">Home</option>
+            <option value="toys">Toys</option>
+            <option value="fresh">Fresh</option>
+            <option value="electronics">Electronis</option>
+            <option value="beauty">Beauty</option>
           </select>
-          <label htmlFor="" className="block text-gray-700 font-medium mb-1" >Status</label>
-          <select name="" id="" className="w-full px-4 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2">
+          <label htmlFor="" className="block text-gray-700 font-medium mb-1">
+            Status
+          </label>
+          <select
+            name="productStatus"
+            value={edit.productStatus}
+            onChange={handleChange}
+            id=""
+            className="w-full px-4 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2"
+          >
             <option value="">---select---</option>
-            <option value="">In-Stock</option>
-            <option value="">Out-Stock</option>
-            
+            <option value="In-Stock">In-Stock</option>
+            <option value="Out-stock">Out-Stock</option>
           </select>
-
 
           <div className="text-right">
             <button className="bg-blue-600 text-white px-6 py-2 rounded  hover:bg-blue-700 mb-2">
