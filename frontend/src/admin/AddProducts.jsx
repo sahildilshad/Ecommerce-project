@@ -6,13 +6,20 @@ import { toast } from "react-hot-toast";
 const AddProducts = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState({ Pname: "", Price: "", Cat: "" });
+const [pimage,setPImages] =   useState("")
   async function handleForm(e) {
     e.preventDefault();
+    const formallData = new FormData()
+    formallData.append("Pname",product.Pname)
+    formallData.append("Price",product.Price)
+    formallData.append("Cat",product.Cat)
+    formallData.append("image",pimage)
+    console.log(pimage)
+    console.log(formallData)
     try {
       const response = await fetch("/api/addadminproduct", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(product),
+       body:formallData
       });
       const result = await response.json();
       if (response.ok) {
@@ -43,6 +50,7 @@ const AddProducts = () => {
         </button>
         <form
           onSubmit={handleForm}
+          encType="multipart/form-data"
           action=""
           className="bg-white shadow-md rounded-xl p-6 max-w-3xl mx-auto space-y-6 mt-4"
         >
@@ -91,6 +99,10 @@ const AddProducts = () => {
           <input
             className="w-full px-4 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2"
             type="file"
+            name="Image"
+            
+            onChange={(e)=>{setPImages(e.target.files[0])}}
+
           />
           <div className="text-right">
             <button className="bg-blue-600 text-white px-6 py-2 rounded  hover:bg-blue-700">

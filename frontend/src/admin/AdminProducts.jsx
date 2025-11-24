@@ -11,6 +11,8 @@ const AdminProducts = () => {
     try {
       const respone = await fetch("/api/getproduct");
       const result = await respone.json();
+      console.log(result);
+      
       if (respone.ok) {
         setProduct(result.data);
       } else {
@@ -61,7 +63,7 @@ const AdminProducts = () => {
               className="bg-gray-100 rounded-xl shadow-md p-4 hover:shadow-xl"
             >
               <img
-                src="https://tse3.mm.bing.net/th/id/OIP.kori7Y8NQzmHi4RLlD-T9AHaE5?pid=Api&P=0&h=180"
+                src={`/uploads/${item.productImage}`}
                 className="w-full h-40 mb-4  border object-contain rounded-md "
                 alt=""
               />

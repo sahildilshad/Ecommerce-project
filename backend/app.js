@@ -8,7 +8,7 @@ const {connectDB} =  require("./config/db")
 const cors  = require("cors")
 app.use(cors())
 connectDB()
-
+app.use(express.static("public"))
 app.use(express.json())
 
 app.use("/api",apiRoutes)

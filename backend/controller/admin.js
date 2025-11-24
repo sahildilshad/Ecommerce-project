@@ -2,6 +2,9 @@ const productCollection = require("../models/product");
 
 const addadminproductController = async (req, res) => {
   try {
+    console.log(req.body)
+    const PImage = req.file.filename
+
     const { Pname, Price, Cat } = req.body;
     if (!Pname || !Price || !Cat) {
       return res.status(400).json({ message: "All fields are required" });
@@ -11,6 +14,7 @@ const addadminproductController = async (req, res) => {
       productName: Pname,
       productPrice: Price,
       productCategory: Cat,
+      productImage:PImage
     });
     await record.save();
     res.status(200).json({ message: "Successfully insert Product" });
