@@ -3,7 +3,7 @@ import { IoIosClose } from "react-icons/io";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
-import {toast} from "react-hot-toast"
+import { toast } from "react-hot-toast";
 const Query = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState({
@@ -17,28 +17,28 @@ const Query = () => {
     console.log(query);
 
     try {
-       const response = await fetch("/api/userquery", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(query),
-    });
-    console.log(response);
-    
+      const response = await fetch("/api/userquery", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(query),
+      });
+      console.log(response);
 
-    const result = await response.json();
-    console.log(result);
-    if(response.ok){
-      toast.success(result.message)
-    }
-    else{
-      toast.error(result.message)
-    }
-      
+      const result = await response.json();
+      console.log(result);
+      if (response.ok) {
+        toast.success(result.message);
+        setQuery({
+          userName: "",
+          userEmail: "",
+          userQuery: "",
+        });
+      } else {
+        toast.error(result.message);
+      }
     } catch (error) {
-      toast.error(error)
-      
+     toast.error(error)
     }
-   
   }
   function handleChange(e) {
     setQuery({ ...query, [e.target.name]: e.target.value });

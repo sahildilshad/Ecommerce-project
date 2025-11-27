@@ -30,7 +30,7 @@ const App = () => {
       <Route path="/admin/add-products" element={<AddProducts />} />
       <Route path="/admin/edit-products/:id" element={<EditProducts />} />
       <Route path="/admin/adminquery" element={<AdminQuery />} />
-      <Route path="/admin/queryriply" element={<QueryRiply/>} />
+      <Route path="/admin/queryriply/:id" element={<QueryRiply/>} />
      </Routes>
      <Footer />
      </BrowserRouter>

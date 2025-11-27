@@ -1,8 +1,52 @@
 import React from "react";
 import Slidebar from "./Slidebar";
 import { Link } from "react-router";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const AdminQuery = () => {
+  const [query, setQuery] = useState([]);
+
+  async function allQuery() {
+    try {
+      const response = await fetch("/api/userallquery");
+      const result = await response.json();
+      
+
+      if (response.ok) {
+        setQuery(result.data);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error(error);
+
+    }
+  }
+  useEffect(() => {
+    allQuery();
+  }, []);
+
+  async function handleDelete(id) {
+    try {
+      const response = await fetch(`/api/querydelete/${id}`, {
+        method: "DELETE",
+      });
+      const result = await response.json();
+      if (response.ok) {
+        toast.success(result.message);
+        allQuery()
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error(error);
+    
+
+    }
+  }
+
   return (
     <div className="flex mt-16">
       <Slidebar />
@@ -24,29 +68,35 @@ const AdminQuery = () => {
                 <th className="px-6 py-3 ">Action-2</th>
               </tr>
             </thead>
-            <tbody>
-              <tr className="bg-gray-100 border-b border-gray-400">
-                <td className="px-6 py-3 ">1</td>
-                <td className="px-6 py-3 ">Sahil</td>
-                <td className="px-6 py-3 ">Mern</td>
-                <td className="px-6 py-3 ">Sahil@example.com</td>
-                <td className="px-6 py-3 ">unread</td>
+            {query.length===0?<p>No Query's here...</p> : query.map((item, index) => (
+              <tbody key={index}>
+                <tr className="bg-gray-100 border-b border-gray-400">
+                  <td className="px-6 py-3 ">{index + 1}</td>
+                  <td className="px-6 py-3 ">{item.Name}</td>
+                  <td className="px-6 py-3 ">{item.Query}</td>
+                  <td className="px-6 py-3 ">{item.Email}</td>
+                  <td className="px-6 py-3 ">{item.queryStatus}</td>
 
-                <td className="px-6 py-3 ">
-                  <Link to={"/admin/queryriply"}>
-                 
-                    <button className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded">
-                      Reply
+                  <td className="px-6 py-3 ">
+                    <Link to={`/admin/queryriply/${item._id}`}>
+                      <button className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded">
+                        Reply
+                      </button>
+                    </Link>
+                  </td>
+                  <td className="px-6 py-3 ">
+                    <button
+                      onClick={() => {
+                        handleDelete(item._id);
+                      }}
+                      className="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded"
+                    >
+                      Delete
                     </button>
-                  </Link>
-                </td>
-                <td className="px-6 py-3 ">
-                  <button className="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
           </table>
         </div>
       </div>

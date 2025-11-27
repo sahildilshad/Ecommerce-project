@@ -90,7 +90,7 @@ const [pimage,setPImages] =   useState("")
             <option value="home">Home</option>
             <option value="toys">Toys</option>
             <option value="fresh">Fresh</option>
-            <option value="electronis">Electronis</option>
+            <option value="electronics">Electronics</option>
             <option value="beauty">Beauty</option>
           </select>
           <label className="block text-gray-700 font-medium mb-1" htmlFor="">

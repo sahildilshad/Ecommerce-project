@@ -5,7 +5,7 @@ import { MdOutlineToys, MdOutlineHome } from "react-icons/md";
 import { CiApple, CiLaptop } from "react-icons/ci";
 import { GiLipstick } from "react-icons/gi";
 
-const Category = () => {
+const Category = ({onselectCat}) => {
   const categories = [
     { name: "All", icon: <FaShoppingCart /> },
     { name: "Cafe", icon: <IoIosCafe /> },
@@ -21,7 +21,8 @@ const Category = () => {
       <div className="max-w-7xl mx-auto px-4 ">
         <div className="flex sm:justify-center overflow-x-auto">
           {categories.map((cat, index) => (
-            <div key={index} className="flex flex-col items-center min-w-[80px] text-sm text-blue-400 hover:text-blue-500 cursor-pointer">
+            <div key={index} onClick={()=>{onselectCat(cat.name)}} className="flex flex-col items-center min-w-[80px] text-sm text-blue-400 hover:text-blue-500 cursor-pointer">
+
               <div className="text-xl mb-1">{cat.icon}</div>
               <div className="text-center">{cat.name}</div>
             </div>
