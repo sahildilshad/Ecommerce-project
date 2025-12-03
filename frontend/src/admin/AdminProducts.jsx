@@ -64,7 +64,7 @@ const AdminProducts = () => {
             >
               <img
                 src={`/uploads/${item.productImage}`}
-                className="w-full h-40 mb-4  border object-contain rounded-md "
+                className="w-full h-48 mb-4  border object-contain rounded-md "
                 alt=""
               />
               <h3 className="text-xl font-semibold text-gray-700">

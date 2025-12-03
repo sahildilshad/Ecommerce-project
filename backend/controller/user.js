@@ -3,6 +3,7 @@ const userCollection = require("../models/user");
 const bcrypt = require("bcrypt");
 const productCollection = require("../models/product");
 const queryCollection = require("../models/query");
+const cartCollection = require("../models/cart");
 
 const regDataController = async (req, res) => {
   try {
@@ -47,7 +48,7 @@ const loginDataController = async (req, res) => {
 const userProductController = async (req, res) => {
   try {
     const category = req.query.category;
-    let filter = { productStatus:"In-Stock" };
+    let filter = { productStatus: "In-Stock" };
     if (category && category.toLowerCase() !== "all") {
       filter.productCategory = category.toLowerCase();
     }
@@ -76,9 +77,27 @@ const userQueryController = async (req, res) => {
   }
 };
 
+const saveCartDataController = async (req, res) => {
+  try {
+    const { cartItems, totalPrice, totalQuantity } = req.body;
+    const cart = new cartCollection({
+      cartItems:cartItems,
+      totalPrice:totalPrice,
+      totalQuantity:totalQuantity
+    });
+    await cart.save();
+    res.status(200).json({message:"cart save successfully"})
+  } catch (error) {
+    res.status(500).json({message:"Internal server error"})
+  }
+};
+
+
+
 module.exports = {
   regDataController,
   loginDataController,
   userProductController,
   userQueryController,
+  saveCartDataController,
 };

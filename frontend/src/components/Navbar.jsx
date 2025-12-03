@@ -12,6 +12,7 @@ import { MdOutlineMessage } from "react-icons/md";
 
 const Navbar = () => {
   const [isopen, setIsOpen] = useState(false);
+  const [showSearch,setShowSearch] =  useState(false)
   return (
     <nav className="bg-gradient-to-r from from-blue-200 via-pink to-white shadow-md fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
@@ -31,7 +32,7 @@ const Navbar = () => {
                 className="w-full bg-gray-100 rounded pl-4 pr-10 py-2 shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Search for fruits and more "
               />
-              <FaSearch className="absolute right-4 top-3 text-blue-500 cursor-pointer" />
+              <FaSearch  className="absolute right-4 top-3 text-blue-500 cursor-pointer" />
             </div>
           </div>
           {/* {menu} */}
