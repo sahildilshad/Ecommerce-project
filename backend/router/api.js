@@ -3,7 +3,7 @@ const apiRoutes =  require("express").Router()
 const userController =  require('../controller/user')
 const adminController = require("../controller/admin")
 const uploads = require("../middleware/multer")
-
+const auth = require("../middleware/auth")
 apiRoutes.get("/",(req,res)=>{
     res.send("hello backend")
 })
@@ -25,6 +25,8 @@ apiRoutes.get("/userallquery",adminController.userAllQueryController)
 apiRoutes.delete("/querydelete/:abc",adminController.queryDeleteController)
 apiRoutes.get("/querysingledata/:abc",adminController.querySingleDataController)
 apiRoutes.post("/mailreply/:abc",adminController.mailreplyController)
-apiRoutes.post("/cart/save",userController.saveCartDataController)
+apiRoutes.post("/cart/save",auth,userController.saveCartDataController)
+apiRoutes.get("/search",userController.searchController)
+
 
 module.exports = apiRoutes

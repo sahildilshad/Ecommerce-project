@@ -21,6 +21,9 @@ const Login = () => {
 
       if (response.ok) {
         toast.success(result.message);
+        localStorage.setItem("token",result.token)
+        localStorage.setItem("user",result.data._id)
+        console.log(result)
         navigate("/")
       }else{
         toast.error(result.message);

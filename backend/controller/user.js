@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const productCollection = require("../models/product");
 const queryCollection = require("../models/query");
 const cartCollection = require("../models/cart");
-
+const jwt = require("jsonwebtoken");
 const regDataController = async (req, res) => {
   try {
     const { fullname, email, pass } = req.body;
@@ -39,7 +39,11 @@ const loginDataController = async (req, res) => {
     if (!matchPass) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    res.status(200).json({ message: "Successfully login" });
+    const token = jwt.sign({ id: userCheck._id }, process.env.JWT_SECRET, {
+      expiresIn: "2d",
+    });
+
+    res.status(200).json({ message: "Successfully login", token: token, data:userCheck});
   } catch (error) {
     res.status(500).json({ message: "Invalid server error" });
   }
@@ -81,18 +85,30 @@ const saveCartDataController = async (req, res) => {
   try {
     const { cartItems, totalPrice, totalQuantity } = req.body;
     const cart = new cartCollection({
-      cartItems:cartItems,
-      totalPrice:totalPrice,
-      totalQuantity:totalQuantity
+      cartItems: cartItems,
+      totalPrice: totalPrice,
+      totalQuantity: totalQuantity,
     });
     await cart.save();
-    res.status(200).json({message:"cart save successfully"})
+    res.status(200).json({ message: "cart save successfully" });
   } catch (error) {
-    res.status(500).json({message:"Internal server error"})
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
+const searchController = async (req, res) => {
+  try {
+    const keyword = req.query.q;
+    const result = await productCollection.find({
+      productName: { $regex: keyword, $options: "i" },
+      productStatus: "In-Stock",
+    });
 
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
   regDataController,
@@ -100,4 +116,5 @@ module.exports = {
   userProductController,
   userQueryController,
   saveCartDataController,
+  searchController,
 };

@@ -1,13 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const saveCart = createAsyncThunk("cart/save",async (cartData) => {
-const response =  await fetch("/api/cart/save", {
+export const saveCart = createAsyncThunk("cart/save", async (cartData) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch("/api/cart/save", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body:JSON.stringify(cartData)
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token} `,
+    },
+
+    body: JSON.stringify(cartData),
   });
- const result = await response.json()
- console.log(result)
+ return await response.json();
+  
 });
 
 const initialState = {
@@ -77,7 +82,16 @@ export const cartSlice = createSlice({
       state.TotalQuantity = totalQuantity;
     },
   },
+
+  extraReducers:(builder)=>{
+builder.addCase(saveCart.fulfilled,(state,actions)=>{
+  console.log("cart save :- " ,actions.payload);
+  
+})
+
+  }
 });
+
 
 export const {
   addToCart,
